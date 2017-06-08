@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import Paper from 'material-ui/Paper';
 import RaisedButton from 'material-ui/RaisedButton';
-import SelectField from 'material-ui/SelectField';
-import MenuItem  from 'material-ui/MenuItem';
+import FlatButton from 'material-ui/FlatButton';
 
 const buttonStyle = {
   margin: '6px 0 6px 12px'
@@ -14,40 +13,44 @@ const paperStyle = {
   display: 'flex',
   alignItems: 'flex-end'
 };
-const selectFieldStyle = {
-  marginLeft: '12px'
-}
 
 class BottomMenu extends Component {
-  constructor() {
-    super();
-    this.state = {};
+
+  startClicked() {
+    this.props.onRunningChange(true);
   }
 
-  cellSettingChanged(event, index, value) {
-    this.setState({ initSetting: value });
+  stopClicked() {
+    this.props.onRunningChange(false);
+  }
+
+  resetClicked() {
+    this.props.onReset();
   }
 
   render() {
     return (
       <Paper
         zDepth={2}
-        style={paperStyle}>
+        style={ paperStyle }>
         <RaisedButton
+          onTouchTap={ this.startClicked.bind(this) }
+          disabled={ this.props.isRunning }
           label="Start"
           primary={true}
-          style={buttonStyle}/>
+          style={ buttonStyle }/>
         <RaisedButton
+          onTouchTap={ this.stopClicked.bind(this) }
+          disabled={ !this.props.isRunning }
           label="Stop"
           primary={true}
-          style={buttonStyle}/>
-        <SelectField
-          hintText="Ustawienia początkowe"
-          style={selectFieldStyle}
-          value={this.state.initSetting}
-          onChange={this.cellSettingChanged.bind(this)}>
-          { this.props.cellSettings.map( (setting) => <MenuItem key={setting.name} value={setting} primaryText={setting.name}/> ) }
-        </SelectField>
+          style={ buttonStyle }/>
+        <FlatButton
+          onTouchTap={ this.resetClicked.bind(this) }
+          disabled={ this.props.isRunning }
+          label="Resetuj"
+          primary={true}
+          style={ buttonStyle }/>
       </Paper>
     );
   }
