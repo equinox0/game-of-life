@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import BottomMenu from './../components/BottomMenu';
+import CellsGrid from './../components/CellsGrid';
 import SettingsDrawer from './../components/SettingsDrawer';
 
 import CELLS_SETTINGS from './../constants/InitCellsSettings';
+
+import './../styles/App.css'
+import './../styles/Style.css'
 
 class App extends Component {
   constructor(props) {
@@ -40,21 +44,24 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <AppBar
-          title="Gra w życie"
-          onLeftIconButtonTouchTap={ this.toggleDrawer.bind(this) }/>
-        <h1>Is running: { this.state.isRunning.toString() }</h1>
+      <div className="app">
+        <div className="layout">
+          <AppBar
+            title="Gra w życie"
+            onLeftIconButtonTouchTap={ this.toggleDrawer.bind(this) }/>
+          <CellsGrid
+            isRunning={ this.state.isRunning }/>
+          <BottomMenu
+            isRunning={ this.state.isRunning }
+            onRunningChange={ this.handleRunningChange.bind(this) }
+            onReset={ this.handleReset.bind(this) }/>
+        </div>
         <SettingsDrawer
           isOpen={ this.state.isDrawerOpen }
           onOpenChange={ this.handleOpenChange.bind(this) }
           cellSettings={ CELLS_SETTINGS }
           currentCellSetting={ this.state.currentCellSetting }
           onCellSettingChange={ this.handleCellSettingChange.bind(this) }/>
-        <BottomMenu
-          isRunning={ this.state.isRunning }
-          onRunningChange={ this.handleRunningChange.bind(this) }
-          onReset={ this.handleReset.bind(this) } />
       </div>
     );
   }

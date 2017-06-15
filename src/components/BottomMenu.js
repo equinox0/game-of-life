@@ -6,13 +6,6 @@ import FlatButton from 'material-ui/FlatButton';
 const buttonStyle = {
   margin: '6px 0 6px 12px'
 };
-const paperStyle = {
-  width: '100%',
-  position: 'fixed',
-  bottom: '2px',
-  display: 'flex',
-  alignItems: 'flex-end'
-};
 
 class BottomMenu extends Component {
 
@@ -31,8 +24,7 @@ class BottomMenu extends Component {
   render() {
     return (
       <Paper
-        zDepth={2}
-        style={ paperStyle }>
+        zDepth={2}>
         <RaisedButton
           onTouchTap={ this.startClicked.bind(this) }
           disabled={ this.props.isRunning }
