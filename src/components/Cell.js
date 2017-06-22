@@ -4,7 +4,6 @@ import './../styles/Cell.css';
 class Cell extends Component {
   constructor(props) {
     super(props);
-
     this.classes = 'cell';
     this.classes += this.props.isAlive ? ' alive' : ' dead';
     this.classes += this.props.isEditable ? ' editable' : '';
@@ -12,7 +11,7 @@ class Cell extends Component {
 
   render() {
     return (
-      <div className={this.classes}>
+      <div className={ this.classes }>
       </div>
     );
   }

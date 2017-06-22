@@ -1,0 +1,8 @@
+const CELLS_GRID_CONFIG = {
+  NUMBER_OF_ROWS: 16,
+  NUMBER_OF_COLUMNS: 40,
+  CELL_WIDTH: '25px',
+  CELL_HEIGHT: '25px'
+}
+
+export default CELLS_GRID_CONFIG;

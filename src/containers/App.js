@@ -4,7 +4,7 @@ import BottomMenu from './../components/BottomMenu';
 import CellsGrid from './../components/CellsGrid';
 import SettingsDrawer from './../components/SettingsDrawer';
 
-import CELLS_SETTINGS from './../constants/InitCellsSettings';
+import CELLS_SETTINGS from './../constants/CellsSettings';
 
 import './../styles/App.css'
 import './../styles/Style.css'
@@ -49,8 +49,10 @@ class App extends Component {
           <AppBar
             title="Gra w życie"
             onLeftIconButtonTouchTap={ this.toggleDrawer.bind(this) }/>
-          <CellsGrid
-            isRunning={ this.state.isRunning }/>
+          <div className="content">
+            <CellsGrid
+              isRunning={ this.state.isRunning }/>
+          </div>
           <BottomMenu
             isRunning={ this.state.isRunning }
             onRunningChange={ this.handleRunningChange.bind(this) }

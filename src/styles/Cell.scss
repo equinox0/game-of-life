@@ -1,9 +1,13 @@
+$cell-width: 21px;
+$cell-height: 21px;
+$cell-margin: 2px;
+
 .cell {
   display: inline-block;
-  width: 24px;
-  height: 24px;
+  width: $cell-width;
+  height: $cell-height;
+  margin: $cell-margin;
   border-radius: 2px;
-  margin: 3px;
   box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
   &.editable {

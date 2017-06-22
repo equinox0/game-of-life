@@ -1,23 +1,23 @@
 const CELLS_SETTINGS = [
   {
     name: "Clear",
-    cells: {}
+    aliveCells: []
   },
   {
     name: "Small exploder",
-    cells: {}
+    aliveCells: []
   },
   {
     name: "Exploder",
-    cells: {}
+    aliveCells: []
   },
   {
     name: "10 cell row",
-    cells: {}
+    aliveCells: []
   },
   {
     name: "Tumbler",
-    cells: {}
+    aliveCells: []
   }
 ]
 
