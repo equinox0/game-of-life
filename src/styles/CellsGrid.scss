@@ -1,11 +1,17 @@
+// 100px = 4 cells
 $grid-width: 1000px;
-$grid-height: 400px;
+$grid-height: 600px;
 
 .cells-grid {
-  // background-color: #F5F5F5;
-  background-color: red;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #F5F5F5;
   border-radius: 2px;
   width: $grid-width;
   height: $grid-height;
   line-height:0;
+
+  .cell {
+    flex-shrink: 0;
+  }
 }

@@ -38,6 +38,15 @@ describe('Cells factory', () => {
         expect(column.length).toEqual(CELLS_GRID_CONFIG.NUMBER_OF_ROWS);
       }
     });
+
+    it('should sort cells in grid row by row', () => {
+      expect(grid[0].x).toEqual(0);
+      expect(grid[0].y).toEqual(0);
+      expect(grid[CELLS_GRID_CONFIG.NUMBER_OF_COLUMNS / 2].x).toEqual(CELLS_GRID_CONFIG.NUMBER_OF_COLUMNS / 2);
+      expect(grid[CELLS_GRID_CONFIG.NUMBER_OF_COLUMNS / 2].y).toEqual(0);
+      expect(grid[CELLS_GRID_CONFIG.NUMBER_OF_COLUMNS].x).toEqual(0);
+      expect(grid[CELLS_GRID_CONFIG.NUMBER_OF_COLUMNS].y).toEqual(1);
+    });
   });
 
   describe('Grid with alive cells given', () => {

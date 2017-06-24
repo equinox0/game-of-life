@@ -3,7 +3,6 @@ import AppBar from 'material-ui/AppBar';
 import BottomMenu from './../components/BottomMenu';
 import CellsGrid from './../components/CellsGrid';
 import SettingsDrawer from './../components/SettingsDrawer';
-
 import CELLS_SETTINGS from './../constants/CellsSettings';
 
 import './../styles/App.css'
@@ -16,7 +15,7 @@ class App extends Component {
     this.state = {
       isRunning: false,
       isDrawerOpen: false,
-      currentCellSetting: CELLS_SETTINGS.find((setting) => setting.name.toUpperCase() === 'CLEAR')
+      currentCellSetting: CELLS_SETTINGS.find( setting => setting.name.toUpperCase() === 'CLEAR' )
     }
   }
 
@@ -51,7 +50,9 @@ class App extends Component {
             onLeftIconButtonTouchTap={ this.toggleDrawer.bind(this) }/>
           <div className="content">
             <CellsGrid
-              isRunning={ this.state.isRunning }/>
+              cellSetting={ this.state.currentCellSetting }
+              isRunning={ this.state.isRunning }
+              isEditable={ false }/>
           </div>
           <BottomMenu
             isRunning={ this.state.isRunning }
