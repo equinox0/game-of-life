@@ -14,6 +14,7 @@ class App extends Component {
 
     this.state = {
       isRunning: false,
+      areCellsEditable: false,
       isDrawerOpen: false,
       currentCellSetting: CELLS_SETTINGS.find( setting => setting.name.toUpperCase() === 'CLEAR' )
     }
@@ -33,11 +34,16 @@ class App extends Component {
     this.setState({ currentCellSetting: setting });
   }
 
+  handleCellsEditableChange(editable) {
+    this.setState({ areCellsEditable: editable });
+  }
+
   handleRunningChange(isRunning) {
     this.setState({ isRunning });
   }
 
   handleReset() {
+    //todo
     this.setState({ currentCellSetting: CELLS_SETTINGS.find((setting) => setting.name === this.state.currentCellSetting.name) });
   }
 
@@ -52,7 +58,7 @@ class App extends Component {
             <CellsGrid
               cellSetting={ this.state.currentCellSetting }
               isRunning={ this.state.isRunning }
-              isEditable={ false }/>
+              isEditable={ this.state.areCellsEditable } />
           </div>
           <BottomMenu
             isRunning={ this.state.isRunning }
@@ -64,7 +70,9 @@ class App extends Component {
           onOpenChange={ this.handleOpenChange.bind(this) }
           cellSettings={ CELLS_SETTINGS }
           currentCellSetting={ this.state.currentCellSetting }
-          onCellSettingChange={ this.handleCellSettingChange.bind(this) }/>
+          onCellSettingChange={ this.handleCellSettingChange.bind(this) }
+          areCellsEditable={ this.state.areCellsEditable }
+          onCellsEditableChange={ this.handleCellsEditableChange.bind(this) }/>
       </div>
     );
   }

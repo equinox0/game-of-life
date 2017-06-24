@@ -11,6 +11,12 @@ class CellsFactory {
     }
     return grid;
   }
+
+  updateCellInGrid(currentGrid, newCell) {
+    return currentGrid.map( cell => {
+      return (!!newCell && newCell.x === cell.x && newCell.y === cell.y) ? Object.assign({}, cell, newCell) : Object.assign({}, cell);
+    });
+  }
 }
 
 export default CellsFactory;

@@ -22,10 +22,23 @@ class CellsGrid extends Component {
     }
   }
 
+  handleCellClicked(cell) {
+    let newCell = Object.assign({}, cell, { isAlive: !cell.isAlive });
+    this.setState({ grid: this.cellsFactory.updateCellInGrid(this.state.grid, newCell) });
+  }
+
   render() {
     return (
       <div className='cells-grid'>
-        { this.state.grid.map( (cell, index) => <Cell key={ index } isAlive={ cell.isAlive } isEditable={ this.props.isEditable }/> ) }
+        {
+          this.state.grid.map( (cell, index) => (
+            <Cell
+              key={ index }
+              cell={ cell }
+              isEditable={ this.props.isEditable }
+              onCellClicked={ this.handleCellClicked.bind(this) }/>
+          ))
+        }
       </div>
     );
   }
