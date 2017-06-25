@@ -4,6 +4,7 @@ import BottomMenu from './../components/BottomMenu';
 import CellsGrid from './../components/CellsGrid';
 import SettingsDrawer from './../components/SettingsDrawer';
 import CELLS_SETTINGS from './../constants/CellsSettings';
+import CellsFactory from './../utils/CellsFactory';
 
 import './../styles/App.css'
 import './../styles/Style.css'
@@ -12,11 +13,15 @@ class App extends Component {
   constructor(props) {
     super(props);
 
+    this.cellsFactory = new CellsFactory();
+    let clearSetting = CELLS_SETTINGS.find( setting => setting.name.toUpperCase() === 'CLEAR' );
+
     this.state = {
       isRunning: false,
       areCellsEditable: false,
       isDrawerOpen: false,
-      currentCellSetting: CELLS_SETTINGS.find( setting => setting.name.toUpperCase() === 'CLEAR' )
+      grid: this.cellsFactory.createCellsGrid( clearSetting.aliveCells ),
+      currentCellSetting: clearSetting
     }
   }
 
@@ -31,11 +36,23 @@ class App extends Component {
   }
 
   handleCellSettingChange(setting) {
-    this.setState({ currentCellSetting: setting });
+    if(setting.name !== this.state.currentCellSetting.name) {
+      this.setState({
+        grid: this.cellsFactory.createCellsGrid( setting.aliveCells ),
+        currentCellSetting: setting
+      });
+    }
   }
 
   handleCellsEditableChange(editable) {
     this.setState({ areCellsEditable: editable });
+  }
+
+  handleCellClicked(cell) {
+    if(this.state.areCellsEditable) {
+      let newCell = Object.assign({}, cell, { isAlive: !cell.isAlive });
+      this.setState({ grid: this.cellsFactory.updateCellInGrid(this.state.grid, newCell) });
+    }
   }
 
   handleRunningChange(isRunning) {
@@ -43,8 +60,7 @@ class App extends Component {
   }
 
   handleReset() {
-    //todo
-    this.setState({ currentCellSetting: CELLS_SETTINGS.find((setting) => setting.name === this.state.currentCellSetting.name) });
+    this.setState({ grid: this.cellsFactory.createCellsGrid( this.state.currentCellSetting.aliveCells ) });
   }
 
   render() {
@@ -56,9 +72,10 @@ class App extends Component {
             onLeftIconButtonTouchTap={ this.toggleDrawer.bind(this) }/>
           <div className="content">
             <CellsGrid
-              cellSetting={ this.state.currentCellSetting }
+              grid={ this.state.grid }
               isRunning={ this.state.isRunning }
-              isEditable={ this.state.areCellsEditable } />
+              isEditable={ this.state.areCellsEditable }
+              onCellClicked={ this.handleCellClicked.bind(this) } />
           </div>
           <BottomMenu
             isRunning={ this.state.isRunning }
