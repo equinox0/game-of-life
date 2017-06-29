@@ -4,6 +4,7 @@ import BottomMenu from './../components/BottomMenu';
 import CellsGrid from './../components/CellsGrid';
 import SettingsDrawer from './../components/SettingsDrawer';
 import CELLS_SETTINGS from './../constants/CellsSettings';
+import GAME_OF_LIFE_CONFIG from './../constants/GameOfLifeConfig';
 import CellsFactory from './../utils/CellsFactory';
 
 import './../styles/App.css'
@@ -57,6 +58,13 @@ class App extends Component {
 
   handleRunningChange(isRunning) {
     this.setState({ isRunning });
+    if(isRunning) {
+      this.gameOfLifeInterval = setInterval(() => {
+        this.setState({ grid: this.cellsFactory.nextGenerationGrid(this.state.grid) });
+      }, GAME_OF_LIFE_CONFIG.STEP_TIME);
+    } else {
+      clearInterval(this.gameOfLifeInterval);
+    }
   }
 
   handleReset() {
