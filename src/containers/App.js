@@ -5,23 +5,20 @@ import CellsGrid from './../components/CellsGrid';
 import SettingsDrawer from './../components/SettingsDrawer';
 import CELLS_SETTINGS from './../constants/CellsSettings';
 import GAME_OF_LIFE_CONFIG from './../constants/GameOfLifeConfig';
-import CellsFactory from './../utils/CellsFactory';
-
+import { createCellsGrid, updateCellInGrid, getNextGenerationGrid } from './../utils/CellsGridUtils';
 import './../styles/App.css'
 import './../styles/Style.css'
 
 class App extends Component {
   constructor(props) {
     super(props);
-
-    this.cellsFactory = new CellsFactory();
     let clearSetting = CELLS_SETTINGS.find( setting => setting.name.toUpperCase() === 'CLEAR' );
 
     this.state = {
       isRunning: false,
       areCellsEditable: false,
       isDrawerOpen: false,
-      grid: this.cellsFactory.createCellsGrid( clearSetting.aliveCells ),
+      grid: createCellsGrid( clearSetting.aliveCells ),
       currentCellSetting: clearSetting
     }
   }
@@ -39,7 +36,7 @@ class App extends Component {
   handleCellSettingChange(setting) {
     if(setting.name !== this.state.currentCellSetting.name) {
       this.setState({
-        grid: this.cellsFactory.createCellsGrid( setting.aliveCells ),
+        grid: createCellsGrid( setting.aliveCells ),
         currentCellSetting: setting
       });
     }
@@ -52,7 +49,7 @@ class App extends Component {
   handleCellClicked(cell) {
     if(this.state.areCellsEditable) {
       let newCell = Object.assign({}, cell, { isAlive: !cell.isAlive });
-      this.setState({ grid: this.cellsFactory.updateCellInGrid(this.state.grid, newCell) });
+      this.setState({ grid: updateCellInGrid(newCell, this.state.grid) });
     }
   }
 
@@ -60,7 +57,7 @@ class App extends Component {
     this.setState({ isRunning });
     if(isRunning) {
       this.gameOfLifeInterval = setInterval(() => {
-        this.setState({ grid: this.cellsFactory.nextGenerationGrid(this.state.grid) });
+        this.setState({ grid: getNextGenerationGrid(this.state.grid) });
       }, GAME_OF_LIFE_CONFIG.STEP_TIME);
     } else {
       clearInterval(this.gameOfLifeInterval);
@@ -68,7 +65,7 @@ class App extends Component {
   }
 
   handleReset() {
-    this.setState({ grid: this.cellsFactory.createCellsGrid( this.state.currentCellSetting.aliveCells ) });
+    this.setState({ grid: createCellsGrid( this.state.currentCellSetting.aliveCells ) });
   }
 
   render() {
